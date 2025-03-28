@@ -1,24 +1,25 @@
-﻿int num = 10;
-string a = (num % 2 == 0) ? "even" : "odd";
-Console.WriteLine(a);
+var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 
-int num1 = 20;
-string b = (num1 > 0) ? "positive" : (num1 < 0) ? "negative" : "zero";
-Console.WriteLine(b);
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-int year = 2025;
-string result = (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) ? "leap year" : "not aleap year";
-Console.WriteLine(result);
+var app = builder.Build();
 
-int mark = 55;
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-string s = (mark > 90) ? "s Grade" :
-       (mark > 80) ? "a Grade" :
-       (mark > 70) ? "b Grade" :
-       (mark > 60) ? "c Grade" :
-       (mark > 50) ? "d Grade" :
-       (mark > 40) ? "e Grade" :
-       (mark < 40) ? " student failed" :
-       "invalid mark";
-Console.WriteLine(s);
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
